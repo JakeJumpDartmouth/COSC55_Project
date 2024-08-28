@@ -1,3 +1,4 @@
+<?php
 // correct username and password
 $correct_username = 'LJ26';
 $correct_password = 'Goldstein';
@@ -32,3 +33,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Invalid username or password.";
     }
 }
+?>
