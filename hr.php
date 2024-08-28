@@ -1,6 +1,4 @@
 <?php
-// This script connects to the HR database, retrieves employee data, and displays it in a formatted table on an HTML page.
-
 // Database credentials
 $servername = "172.31.17.247"; // MySQL server private IP address
 $username = "root"; // MySQL username
@@ -10,12 +8,12 @@ $dbname = "hr"; // Database name
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection to ensure the database is accessible
+// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to select all records from the employees table
+// Query to select all records from the employees table
 $sql = "SELECT * FROM employees";
 $result = $conn->query($sql);
 ?>
@@ -27,7 +25,7 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HR Department</title>
     <style>
-        /* Basic styling for the page layout and table */
+        /* Basic styling for the page */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -65,7 +63,7 @@ $result = $conn->query($sql);
 <body>
     <div class="container">
         <?php
-        // Retrieve the username from query parameters for a personalized greeting
+        // Retrieve the username from query parameters
         $name = htmlspecialchars($_GET["name"]);
         ?>
 
@@ -74,6 +72,20 @@ $result = $conn->query($sql);
 
         <?php
         if ($result->num_rows > 0) {
-            // Output data of each row into a table format
+            // Output data of each row
             echo "<table>";
-            echo "<tr><th>ID</th
+            echo "<tr><th>ID</th><th>Full Name</th><th>Phone Number</th></tr>";
+            while($row = $result->fetch_assoc()) {
+                echo "<tr><td>" . $row["id"]. "</td><td>" . $row["full_name"]. "</td><td>" . $row["phone_number"]. "</td></tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "<p>No results found</p>";
+        }
+
+        // Close the database connection
+        $conn->close();
+        ?>
+    </div>
+</body>
+</html>
